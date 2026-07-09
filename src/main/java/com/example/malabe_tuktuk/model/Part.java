@@ -134,6 +134,6 @@ public class Part {
 
     @Override
     public String toString(){
-        return code + "|" +  description + "|" + brand + "|" + price + "|" + "Stock: " + quantity + "|" + category + "|" + dateAdded + "|" + photoFileName;
+        return code + " | " +  description + " | " + brand + " | " + price + " | " + "Stock: " + quantity + " | " + category + " | " + dateAdded + " | " + photoFileName;
     }
 }

@@ -26,7 +26,7 @@ public class DataParser {
             }
 
         } catch (IOException e){
-            System.out.println("Error: Could not read file " + filePath + "-" + e.getMessage());
+            System.out.println("Error: Could not read file " + filePath + " - " + e.getMessage());
             return new ArrayList<>();
         }
         return  loadParts(fileContent.toString());
