@@ -157,4 +157,25 @@ public class InventoryService {
         return "Error: Part code " + code + " does not exist";
     }
 
+    public String updatePart(String code, String description,
+                             String brand, double price, int quantity,
+                             String category, String  dateAdded, String photoFileName){
+
+        for (int i = 0; i < inventory.size(); i++){
+
+            Part part = inventory.get(i);
+
+            if (part.getCode().equalsIgnoreCase(code.trim())){
+                part.setDescription(description);
+                part.setBrand(brand);
+                part.setPrice(price);
+                part.setQuantity(quantity);
+                part.setCategory(category);
+                part.setDateAdded(dateAdded);
+                part.setPhotoFileName(photoFileName);
+                return "part " + code + " updated successfully";
+            }
+        }
+        return "Error: Part code " + code + " does not exist";
+    }
 }
