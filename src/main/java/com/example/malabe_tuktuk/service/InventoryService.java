@@ -130,5 +130,22 @@ public class InventoryService {
         return results;
     }
 
+    public String addPart(Part newPart){
+
+        if (newPart.getCode() == null || newPart.getCode().trim().isEmpty()){
+            return "Error: Part code cannot be empty";
+        }
+
+        for (int i =0; i < inventory.size(); i++){
+            if (inventory.get(i).getCode().equalsIgnoreCase(newPart.getCode().trim())){
+                return "Error: Part code "+ newPart.getCode() +" already exists";
+            }
+        }
+
+        inventory.add(newPart);
+        return "Part " + newPart.getCode() + " added successfully";
+    }
+
+
 
 }
