@@ -60,4 +60,37 @@ public class CartService {
         }
         return "Error: " + partCode + " does not exist in the cart.";
     }
+
+    public double calculateTotal(){
+
+        double total = 0;
+        boolean hasEngine = false;
+        boolean hasElectrical = false;
+
+        for (int i = 0; i < cartItems.size(); i++){
+            Cart item = cartItems.get(i);
+            double subtotal = item.getSubtotal();
+
+            if (item.getQuantity() >= 3){
+                subtotal = subtotal * 0.95;
+            }
+
+            total += subtotal;
+
+            String category = item.getPart().getCategory();
+            if (category.equalsIgnoreCase("Engine")){
+                hasEngine = true;
+            }
+
+            if (category.equalsIgnoreCase("Electrical")){
+                hasElectrical = true;
+            }
+        }
+
+        if (hasElectrical &&  hasEngine){
+            total = total * 0.90;
+        }
+
+        return total;
+    }
 }
