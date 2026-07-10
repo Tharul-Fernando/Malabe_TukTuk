@@ -49,4 +49,15 @@ public class CartService {
         return part.getCode()+ " added to cart.";
     }
 
+    public String removeFromCart(String partCode){
+
+        for (int i = 0; i < cartItems.size(); i++){
+
+            if (cartItems.get(i).getPart().getCode().equalsIgnoreCase(partCode.trim())){
+                cartItems.remove(i);
+                return partCode + " removed from cart.";
+            }
+        }
+        return "Error: " + partCode + " does not exist in the cart.";
+    }
 }
