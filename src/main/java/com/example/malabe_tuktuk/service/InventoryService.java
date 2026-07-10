@@ -146,6 +146,15 @@ public class InventoryService {
         return "Part " + newPart.getCode() + " added successfully";
     }
 
+    public String deletePart(String code){
 
+        for (int i = 0; i < inventory.size(); i++){
+            if (inventory.get(i).getCode().equalsIgnoreCase(code.trim())){
+                inventory.remove(i);
+                return "Part " + code + " deleted successfully";
+            }
+        }
+        return "Error: Part code " + code + " does not exist";
+    }
 
 }
