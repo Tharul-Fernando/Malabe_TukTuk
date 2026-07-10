@@ -49,4 +49,30 @@ public class DealerService {
         }
         return selected;
     }
+
+    private void sortByCity(List<Dealer> dealerList) {
+
+        int size = dealerList.size();
+        boolean swapped;
+
+        for (int i = 0; i < size - 1; i++){
+            swapped = false;
+
+            for (int j = 0; j < size - 1 - i; j++){
+
+                Dealer current = dealerList.get(i);
+                Dealer next = dealerList.get(i + 1);
+
+                if (current.getCity().compareTo(next.getCity()) > 0){
+                    dealerList.set(i, next);
+                    dealerList.set(i+1, current);
+                    swapped = true;
+                }
+            }
+
+            if (!swapped){
+                break;
+            }
+        }
+    }
 }
