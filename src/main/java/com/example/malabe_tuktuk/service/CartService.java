@@ -93,4 +93,29 @@ public class CartService {
 
         return total;
     }
+
+    public String checkout(){
+
+        if (cartItems.isEmpty()){
+            return "Error: Cart is Empty, Cannot checkout";
+        }
+
+        for (int i = 0; i < cartItems.size(); i++){
+            Cart item = cartItems.get(i);
+            if (item.getQuantity() > item.getPart().getQuantity()){
+                return "Error: Not enough stock for "+ item.getPart().getCode() +" to complete the order.";
+            }
+        }
+
+        for (int i = 0; i < cartItems.size(); i++){
+            Cart item = cartItems.get(i);
+            Part part = item.getPart();
+            part.setQuantity(part.getQuantity() - item.getQuantity());
+        }
+
+        double finalTotal =  calculateTotal();
+        cartItems.clear();
+
+        return "Checkout successful. Total charged: Rs. " + finalTotal;
+    }
 }
