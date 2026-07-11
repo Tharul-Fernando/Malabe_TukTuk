@@ -2,9 +2,7 @@ package com.example.malabe_tuktuk.parser;
 
 import com.example.malabe_tuktuk.model.Part;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,7 +29,6 @@ public class DataParser {
         }
         return  loadParts(fileContent.toString());
     }
-
 
     public static List<Part> loadParts(String rawData) {
 
@@ -109,6 +106,47 @@ public class DataParser {
 
         return inventory_list;
 
+    }
+
+    public static void saveParts(List<Part> parts, String filePath){
+
+        try{
+            FileWriter writer = new FileWriter(filePath);
+
+            for (int i = 0; i < parts.size(); i++){
+
+                Part part = parts.get(i);
+
+                String line = part.getCode() + ", " +
+                        part.getDescription() + ", " +
+                        part.getBrand() + ", " +
+                        part.getPrice() + ", " +
+                        part.getQuantity() + ", " +
+                        part.getCategory() + ", " +
+                        part.getDateAdded() + ", " +
+                        part.getPhotoFileName();
+
+
+                writer.write(line);
+                writer.write("\n");
+            }
+            writer.close();
+        }
+        catch (IOException e){
+            System.out.println("Error; Could not save inventory file");
+        }
+    }
+
+    public static List<Part> loadInventory(String cleanFilePath, String legacyFilePath){
+
+        File cleanFile = new File(cleanFilePath);
+
+        if (cleanFile.exists()) {
+            return readPartsFile(cleanFilePath);
+        }
+        else{
+            return readPartsFile(legacyFilePath);
+        }
     }
 
     public static String DateFormat(String rawDate) {
