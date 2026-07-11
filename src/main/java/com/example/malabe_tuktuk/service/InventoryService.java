@@ -9,10 +9,12 @@ public class InventoryService {
 
     private List<Part> inventory;
     private int lowStockThreshold;
+    private AuditLogger auditLogger;
 
     public InventoryService(List<Part> inventory){
         this.inventory = inventory;
         this.lowStockThreshold = 10;
+        this.auditLogger = new AuditLogger("data/audit_log.txt");
     }
 
     public List<Part> getInventory(){
@@ -143,6 +145,7 @@ public class InventoryService {
         }
 
         inventory.add(newPart);
+        auditLogger.log("ADD_PART", newPart.getCode(), newPart.getQuantity());
         return "Part " + newPart.getCode() + " added successfully";
     }
 
@@ -151,6 +154,7 @@ public class InventoryService {
         for (int i = 0; i < inventory.size(); i++){
             if (inventory.get(i).getCode().equalsIgnoreCase(code.trim())){
                 inventory.remove(i);
+                auditLogger.log("DELETE_PART", code, 0);
                 return "Part " + code + " deleted successfully";
             }
         }
@@ -173,6 +177,7 @@ public class InventoryService {
                 part.setCategory(category);
                 part.setDateAdded(dateAdded);
                 part.setPhotoFileName(photoFileName);
+                auditLogger.log("UPDATE_PART", code, quantity);
                 return "part " + code + " updated successfully";
             }
         }
