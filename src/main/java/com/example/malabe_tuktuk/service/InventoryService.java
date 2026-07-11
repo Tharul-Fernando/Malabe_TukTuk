@@ -63,7 +63,7 @@ public class InventoryService {
         for (int i = 0; i < size - 1; i++){
             swapped = false;
 
-            for (int j = 0; j < size - 1 - j; i++){
+            for (int j = 0; j < size - 1 - i; i++){
                 Part current = inventory.get(i);
                 Part next = inventory.get(i+1);
 

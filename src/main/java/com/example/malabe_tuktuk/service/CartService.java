@@ -23,7 +23,7 @@ public class CartService {
     public String addToCart(Part part, int quantity){
 
         if (quantity <= 0){
-            System.out.println("Error: Quantity must be greater than 0");
+            return ("Error: Quantity must be greater than 0");
         }
 
         if (quantity > part.getQuantity()){
