@@ -9,9 +9,11 @@ import java.util.List;
 public class CartService {
 
     private List<Cart> cartItems;
+    private AuditLogger auditLogger;
 
     public CartService(){
         this.cartItems = new ArrayList<Cart>();
+        this.auditLogger = new AuditLogger("data/audit_log.txt");
     }
 
     public List<Cart> getCartItems(){
@@ -111,6 +113,7 @@ public class CartService {
             Cart item = cartItems.get(i);
             Part part = item.getPart();
             part.setQuantity(part.getQuantity() - item.getQuantity());
+            auditLogger.log("CHECKOUT", item.getPart().getCode(), item.getQuantity());
         }
 
         double finalTotal =  calculateTotal();
