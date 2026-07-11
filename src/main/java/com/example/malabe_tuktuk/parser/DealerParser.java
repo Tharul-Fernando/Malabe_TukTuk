@@ -2,9 +2,7 @@ package com.example.malabe_tuktuk.parser;
 
 import com.example.malabe_tuktuk.model.Dealer;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,44 @@ public class DealerParser {
             return new ArrayList<>();
         }
         return loadDealers(fileContent.toString());
+    }
+
+    public static void saveDealers(List<Dealer> dealers, String filePath) {
+
+        try{
+            FileWriter writer = new FileWriter(filePath);
+
+            for (int i = 0; i < dealers.size(); i++){
+
+                Dealer dealer = dealers.get(i);
+
+                String line = dealer.getDealerCode() + ", " +
+                        dealer.getDealerName() + ", " +
+                        dealer.getPhoneNumber() + ", " +
+                        dealer.getCity();
+
+                writer.write(line);
+                writer.write("\n");
+
+            }
+
+            writer.close();
+        }
+        catch (IOException e){
+            System.out.println("Error: could not save  dealer file.");
+        }
+    }
+
+    public static List<Dealer> loadDealerInventory(String cleanFilePath, String legacyFilePath){
+
+        File cleanFile = new File(cleanFilePath);
+
+        if (cleanFile.exists()) {
+            return readDealerFile(cleanFilePath);
+        }
+        else{
+            return readDealerFile(legacyFilePath);
+        }
     }
 
     public static List<Dealer> loadDealers(String rawDealerData){
