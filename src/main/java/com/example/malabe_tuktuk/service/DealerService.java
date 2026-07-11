@@ -46,6 +46,7 @@ public class DealerService {
                 }
             }
 
+            sortByCity(selected);
         }
         return selected;
     }
