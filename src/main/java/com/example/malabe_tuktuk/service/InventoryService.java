@@ -63,9 +63,9 @@ public class InventoryService {
         for (int i = 0; i < size - 1; i++){
             swapped = false;
 
-            for (int j = 0; j < size - 1 - i; i++){
-                Part current = inventory.get(i);
-                Part next = inventory.get(i+1);
+            for (int j = 0; j < size - 1 - i; j++){
+                Part current = inventory.get(j);
+                Part next = inventory.get(j+1);
 
                 int compare = current.getCategory().compareTo(next.getCategory());
 
@@ -83,8 +83,8 @@ public class InventoryService {
                     }
                 }
                 if (needSwap){
-                    inventory.set(i, next);
-                    inventory.set(i+1, current);
+                    inventory.set(j, next);
+                    inventory.set(j+1, current);
                     swapped = true;
                 }
             }
