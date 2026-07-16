@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.malabe_tuktuk.controller.MainController"
-            prefWidth="900" prefHeight="600">
+<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.malabe_tuktuk.controller.MainController">
 
     <center>
         <TabPane tabClosingPolicy="UNAVAILABLE">
@@ -17,15 +24,81 @@
             <Tab text="Inventory">
                 <VBox spacing="10">
                     <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
+                        <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
+               <children>
+                  <Label fx:id="inventoryTotalsLabel" text=" Total Parts:  0    Total Value: Rs. 0.00" />
+                  <TableView fx:id="inventoryTable" prefHeight="260.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="colCode" prefWidth="75.0" text="Code" />
+                      <TableColumn fx:id="colDescription" prefWidth="75.0" text="Description" />
+                        <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
+                        <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price" />
+                        <TableColumn fx:id="colQuantity" prefWidth="75.0" text="Stock" />
+                        <TableColumn fx:id="colCategory" prefWidth="75.0" text="Category" />
+                        <TableColumn fx:id="colDate" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="colPhoto" prefWidth="75.0" text="Image" />
+                    </columns>
+                  </TableView>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label text="Low-stock threshold:" />
+                        <TextField fx:id="thresholdField" prefWidth="60.0" text="10" />
+                        <Button fx:id="setThresholdButton" mnemonicParsing="false" text="Set Threshold" />
+                     </children>
+                  </HBox>
+                  <Label text="Low-stock warning (updates automatically): " />
+                  <ListView fx:id="lowStockListView" prefHeight="80.0" prefWidth="200.0" />
+                  <Label text="Add / Update / Delete Part" />
+                  <GridPane hgap="10.0" vgap="8.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Code: " />
+                        <Label text="Brand: " GridPane.rowIndex="1" />
+                        <Label text="Quantity: " GridPane.rowIndex="2" />
+                        <Label text="Date (yyyy-MM-dd): " GridPane.rowIndex="3" />
+                        <TextField fx:id="codeField" GridPane.columnIndex="1" />
+                        <TextField fx:id="brandField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="dateField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="descriptionField" GridPane.columnIndex="3" />
+                        <TextField fx:id="priceField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <TextField fx:id="categoryField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <TextField fx:id="photoField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <Label text="Description: " GridPane.columnIndex="2" />
+                        <Label text="Price: " GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label text="Category: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label text="Image: " GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="addPartButton" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="updatePartButton" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="deletePartButton" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="clearFormButton" mnemonicParsing="false" text="Clear" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="inventoryStatusLabel" text="Ready" />
+               </children>
                 </VBox>
             </Tab>
 
             <Tab text="Dealers">
                 <VBox spacing="10">
                     <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
+                        <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
                 </VBox>
             </Tab>
@@ -33,7 +106,7 @@
             <Tab text="Cart / Checkout">
                 <VBox spacing="10">
                     <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
+                        <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
                 </VBox>
             </Tab>
