@@ -4,7 +4,6 @@ import com.example.malabe_tuktuk.model.Part;
 
 import com.example.malabe_tuktuk.parser.DataParser;
 import com.example.malabe_tuktuk.service.InventoryService;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
 import java.util.List;
@@ -118,6 +116,7 @@ public class MainController {
         inventoryService = new InventoryService(loadedParts);
 
         setupInventoryColumns();
+        inventoryService.sortByCate_Code();
         displayInventoryTable();
     }
 
@@ -143,5 +142,33 @@ public class MainController {
     private void displayInventoryTable(){
         ObservableList<Part> tableData = FXCollections.observableArrayList(inventoryService.getInventory());
         inventoryTable.setItems(tableData);
+
+        updateTotalsLabel();
+        updateLowStockList();
+
     }
+
+    private void updateTotalsLabel(){
+        int totalParts = inventoryService.getTotalPart();
+        double totalValue = inventoryService.getTotalPrice();
+
+        inventoryTotalsLabel.setText("No. of item types: "+ totalParts + "  |  Total value: Rs. " + totalValue);
+    }
+
+    private void updateLowStockList(){
+
+        List<Part> lowStockParts = inventoryService.getLowStockParts();
+
+        ObservableList <String>  displayLines = FXCollections.observableArrayList();
+
+        for (int i = 0; i < lowStockParts.size(); i++) {
+
+            Part part = lowStockParts.get(i);
+            String line = part.getCode() + " - " + part.getDescription() + " (Stock: " +  part.getQuantity() + ")";
+            displayLines.add(line);
+        }
+
+        lowStockListView.setItems(displayLines);
+    }
+
 }
