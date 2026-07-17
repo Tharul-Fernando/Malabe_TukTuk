@@ -2,12 +2,23 @@ package com.example.malabe_tuktuk.controller;
 
 import com.example.malabe_tuktuk.model.Part;
 
+import com.example.malabe_tuktuk.parser.DataParser;
+import com.example.malabe_tuktuk.service.InventoryService;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.List;
+
 public class MainController {
 
+    private static final String Clean_Parts = "data/inventory_clean.txt";
+    private static final String Legacy_Parts = "data/inventory_legacy.txt";
+
+    private InventoryService inventoryService;
 
     @FXML
     private Label inventoryTotalsLabel;
@@ -98,5 +109,15 @@ public class MainController {
     @FXML
     public void initialize() {
         System.out.println("MainController connected - initialize() was called");
+
+        List<Part> loadedParts = DataParser.loadInventory(Clean_Parts, Legacy_Parts);
+        inventoryService = new InventoryService(loadedParts);
+
+        displayInventoryTable();
+    }
+
+    private void displayInventoryTable(){
+        ObservableList<Part> tableData = FXCollections.observableArrayList(inventoryService.getInventory());
+        inventoryTable.setItems(tableData);
     }
 }
