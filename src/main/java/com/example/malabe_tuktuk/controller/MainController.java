@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class MainController {
@@ -84,7 +85,7 @@ public class MainController {
     private TextField categoryField;
 
     @FXML
-    private TextField dateField;
+    private DatePicker dateField;
 
     @FXML
     private TextField photoField;
@@ -171,4 +172,57 @@ public class MainController {
         lowStockListView.setItems(displayLines);
     }
 
+    @FXML
+    private void handleAddPart(){
+
+        String code = codeField.getText().trim();
+        String description = descriptionField.getText().trim();
+        String brand = brandField.getText().trim();
+        String priceText = priceField.getText().trim();
+        String quantityText = quantityField.getText().trim();
+        String category = categoryField.getText().trim().toUpperCase();
+        String photoFileName = photoField.getText().trim();
+
+        LocalDate selectedDate = dateField.getValue();
+        String dateAdded;
+
+        if (selectedDate == null) {
+            dateAdded = LocalDate.now().toString();
+        }
+        else {
+            dateAdded = selectedDate.toString();
+        }
+
+        if (photoFileName.isEmpty()){
+            photoFileName = "default_image.jpg";
+        }
+
+        if (priceText.isEmpty() || quantityText.isEmpty()) {
+
+            inventoryTotalsLabel.setText("Error: Price and Quantity are required");
+            return;
+        }
+
+        double price;
+        int quantity;
+
+        try {
+            price = Double.parseDouble(priceText);
+            quantity = Integer.parseInt(quantityText);
+        }
+        catch (NumberFormatException e) {
+            inventoryTotalsLabel.setText("Error: Price must be a number and quantity must be a whole number.");
+            return;
+        }
+
+        Part newPart = new Part(code, description, brand, price, quantity, category, dateAdded, photoFileName);
+
+        String result =  inventoryService.addPart(newPart);
+        inventoryStatusLabel.setText(result);
+
+        inventoryService.sortByCate_Code();
+        DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
+
+        displayInventoryTable();
+    }
 }
