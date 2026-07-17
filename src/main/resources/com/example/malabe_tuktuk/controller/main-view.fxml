@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
@@ -67,11 +68,10 @@
                         <Label text="Code: " />
                         <Label text="Brand: " GridPane.rowIndex="1" />
                         <Label text="Quantity: " GridPane.rowIndex="2" />
-                        <Label text="Date (yyyy-MM-dd): " GridPane.rowIndex="3" />
+                        <Label text="Date: " GridPane.rowIndex="3" />
                         <TextField fx:id="codeField" GridPane.columnIndex="1" />
                         <TextField fx:id="brandField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="dateField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="descriptionField" GridPane.columnIndex="3" />
                         <TextField fx:id="priceField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <TextField fx:id="categoryField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
@@ -80,11 +80,12 @@
                         <Label text="Price: " GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label text="Category: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <Label text="Image: " GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <DatePicker fx:id="dateField" prefHeight="25.0" prefWidth="214.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button fx:id="addPartButton" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#handleAddPart" text="Add" />
                         <Button fx:id="updatePartButton" mnemonicParsing="false" text="Update" />
                         <Button fx:id="deletePartButton" mnemonicParsing="false" text="Delete" />
                         <Button fx:id="clearFormButton" mnemonicParsing="false" text="Clear" />
