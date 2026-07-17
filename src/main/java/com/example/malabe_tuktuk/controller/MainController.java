@@ -5,11 +5,15 @@ import com.example.malabe_tuktuk.model.Part;
 import com.example.malabe_tuktuk.parser.DataParser;
 import com.example.malabe_tuktuk.service.InventoryService;
 import javafx.beans.Observable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 import java.util.List;
 
@@ -113,7 +117,27 @@ public class MainController {
         List<Part> loadedParts = DataParser.loadInventory(Clean_Parts, Legacy_Parts);
         inventoryService = new InventoryService(loadedParts);
 
+        setupInventoryColumns();
         displayInventoryTable();
+    }
+
+    private void setupInventoryColumns() {
+        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
+        colPhoto.setCellValueFactory(new PropertyValueFactory<>("photoFileName"));
+
+        colPrice.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Part, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Part, String> data) {
+                double price = data.getValue().getPrice();
+                String formatted = "Rs. " + price;
+                return new SimpleStringProperty(formatted);
+            }
+        });
     }
 
     private void displayInventoryTable(){
