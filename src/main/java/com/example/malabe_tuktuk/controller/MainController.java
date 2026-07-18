@@ -264,4 +264,18 @@ public class MainController {
         displayInventoryTable();
 
     }
+
+    @FXML
+    private void clearForm(){
+        codeField.clear();
+        descriptionField.clear();
+        brandField.clear();
+        priceField.clear();
+        quantityField.clear();
+        categoryField.clear();
+        dateField.setValue(null);
+        photoField.clear();
+
+        inventoryTable.getSelectionModel().clearSelection();
+    }
 }

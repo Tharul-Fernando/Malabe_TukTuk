@@ -88,7 +88,7 @@
                         <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#handleAddPart" text="Add" />
                         <Button fx:id="updatePartButton" mnemonicParsing="false" text="Update" />
                         <Button fx:id="deletePartButton" mnemonicParsing="false" onAction="#handleDeletePart" text="Delete" />
-                        <Button fx:id="clearFormButton" mnemonicParsing="false" text="Clear" />
+                        <Button fx:id="clearFormButton" mnemonicParsing="false" onAction="#clearForm" text="Clear" />
                      </children>
                   </HBox>
                   <Label fx:id="inventoryStatusLabel" text="Ready" />
