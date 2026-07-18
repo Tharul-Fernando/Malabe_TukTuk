@@ -236,15 +236,10 @@ public class MainController {
         }
 
         Part newPart = new Part(code, description, brand, price, quantity, category, dateAdded, photoFileName);
-
         String result =  inventoryService.addPart(newPart);
-        inventoryStatusLabel.setText(result);
+        inventoryTotalsLabel.setText(result);
 
-        inventoryService.sortByCate_Code();
-        DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
-
-        displayInventoryTable();
-        clearForm();
+        refreshTableView();
     }
 
     @FXML
@@ -260,10 +255,7 @@ public class MainController {
         String result = inventoryService.deletePart(code);
         inventoryStatusLabel.setText(result);
 
-        inventoryService.sortByCate_Code();
-        DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
-        displayInventoryTable();
-
+        refreshTableView();
         clearForm();
     }
 
@@ -331,10 +323,14 @@ public class MainController {
         String result = inventoryService.updatePart(code, description, brand, price, quantity, category, dateAdded, photoFileName);
         inventoryStatusLabel.setText(result);
 
+        refreshTableView();
+    }
+
+    private void refreshTableView() {
+
         inventoryService.sortByCate_Code();
         DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
         displayInventoryTable();
 
-        clearForm();
     }
 }
