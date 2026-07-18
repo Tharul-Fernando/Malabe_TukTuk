@@ -5,6 +5,7 @@ import com.example.malabe_tuktuk.model.Part;
 import com.example.malabe_tuktuk.parser.DataParser;
 import com.example.malabe_tuktuk.service.InventoryService;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -119,6 +120,24 @@ public class MainController {
         setupInventoryColumns();
         inventoryService.sortByCate_Code();
         displayInventoryTable();
+
+        inventoryTable.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Part>() {
+                    @Override
+                    public void changed (ObservableValue<? extends Part> observable, Part oldValue, Part newValue) {
+                        if (newValue != null) {
+                            codeField.setText(newValue.getCode());
+                            descriptionField.setText(newValue.getDescription());
+                            brandField.setText(newValue.getBrand());
+                            priceField.setText(String.valueOf(newValue.getPrice()));
+                            quantityField.setText(String.valueOf(newValue.getQuantity()));
+                            categoryField.setText(newValue.getCategory());
+                            dateField.setValue(LocalDate.parse(newValue.getDateAdded()));
+                            photoField.setText(newValue.getPhotoFileName());
+                        }
+                    }
+                }
+        );
     }
 
     private void setupInventoryColumns() {
