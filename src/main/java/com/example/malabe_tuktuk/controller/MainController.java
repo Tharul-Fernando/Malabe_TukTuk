@@ -163,6 +163,7 @@ public class MainController {
     private void displayInventoryTable(){
         ObservableList<Part> tableData = FXCollections.observableArrayList(inventoryService.getInventory());
         inventoryTable.setItems(tableData);
+        inventoryTable.refresh();
 
         updateTotalsLabel();
         updateLowStockList();
