@@ -141,6 +141,7 @@ public class MainController {
     }
 
     private void setupInventoryColumns() {
+
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
@@ -243,5 +244,24 @@ public class MainController {
         DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
 
         displayInventoryTable();
+    }
+
+    @FXML
+    private void handleDeletePart(){
+
+        String code = codeField.getText().trim();
+
+        if (code.isEmpty()) {
+            inventoryStatusLabel.setText("Error: Select a part or enter a code to delete");
+            return;
+        }
+
+        String result = inventoryService.deletePart(code);
+        inventoryStatusLabel.setText(result);
+
+        inventoryService.sortByCate_Code();
+        DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
+        displayInventoryTable();
+
     }
 }
