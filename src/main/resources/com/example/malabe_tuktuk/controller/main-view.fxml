@@ -86,7 +86,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
                         <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#handleAddPart" text="Add" />
-                        <Button fx:id="updatePartButton" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="updatePartButton" mnemonicParsing="false" onAction="#handleUpdatePart" text="Update" />
                         <Button fx:id="deletePartButton" mnemonicParsing="false" onAction="#handleDeletePart" text="Delete" />
                         <Button fx:id="clearFormButton" mnemonicParsing="false" onAction="#clearForm" text="Clear" />
                      </children>

@@ -244,6 +244,7 @@ public class MainController {
         DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
 
         displayInventoryTable();
+        clearForm();
     }
 
     @FXML
@@ -263,6 +264,7 @@ public class MainController {
         DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
         displayInventoryTable();
 
+        clearForm();
     }
 
     @FXML
@@ -277,5 +279,62 @@ public class MainController {
         photoField.clear();
 
         inventoryTable.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void handleUpdatePart(){
+
+        String code = codeField.getText().trim();
+        String description = descriptionField.getText().trim();
+        String brand = brandField.getText().trim();
+        String priceText = priceField.getText().trim();
+        String quantityText = quantityField.getText().trim();
+        String category = categoryField.getText().trim().toUpperCase();
+        String photoFileName = photoField.getText().trim();
+
+
+        if (code.isEmpty()) {
+            inventoryStatusLabel.setText("Error: Select a part to update");
+            return;
+        }
+
+        if (photoFileName.isEmpty()) {
+            photoFileName = "default_image.jpg";
+        }
+
+        LocalDate selectedDate = dateField.getValue();
+        String dateAdded;
+        if (selectedDate == null) {
+            dateAdded = LocalDate.now().toString();
+        }
+        else {
+            dateAdded = selectedDate.toString();
+        }
+
+        if (priceText.isEmpty() ||  quantityText.isEmpty()) {
+            inventoryTotalsLabel.setText("Error: Price and Quantity are required");
+            return;
+        }
+
+        double price;
+        int quantity;
+
+        try {
+            price = Double.parseDouble(priceText);
+            quantity = Integer.parseInt(quantityText);
+        }
+        catch (NumberFormatException e) {
+            inventoryStatusLabel.setText("Error: Price must be a number and quantity must be a whole number.");
+            return;
+        }
+
+        String result = inventoryService.updatePart(code, description, brand, price, quantity, category, dateAdded, photoFileName);
+        inventoryStatusLabel.setText(result);
+
+        inventoryService.sortByCate_Code();
+        DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
+        displayInventoryTable();
+
+        clearForm();
     }
 }
