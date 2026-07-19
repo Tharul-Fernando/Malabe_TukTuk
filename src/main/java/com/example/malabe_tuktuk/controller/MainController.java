@@ -24,7 +24,6 @@ public class MainController {
     private static final String Clean_Parts = "data/inventory_clean.txt";
     private static final String Legacy_Parts = "data/inventory_legacy.txt";
 
-    private static final String Clean_dealers = "data/dealers_clean.txt";
     private static final String Legacy_dealers = "data/dealers_legacy.txt";
 
     private InventoryService inventoryService;
@@ -147,7 +146,7 @@ public class MainController {
         inventoryService = new InventoryService(loadedParts);
         setupInventoryColumns();
 
-        List<Dealer> loadedDealers = DealerParser.loadDealerInventory(Clean_dealers, Legacy_dealers);
+        List<Dealer> loadedDealers = DealerParser.readDealerFile(Legacy_dealers);
         dealerService = new DealerService(loadedDealers);
         setupDealerColumns();
 
