@@ -334,4 +334,35 @@ public class MainController {
         displayInventoryTable();
 
     }
+
+    @FXML
+    private void handleSetThreshold(){
+
+        String thresholdText = thresholdField.getText().trim();
+
+        if (thresholdText.isEmpty()) {
+            inventoryStatusLabel.setText("Error: Threshold must be a whole number.");
+            return;
+        }
+
+        int newThreshold;
+
+        try {
+            newThreshold = Integer.parseInt(thresholdText);
+        }
+        catch (NumberFormatException e) {
+            inventoryStatusLabel.setText("Error: Threshold must be a whole number.");
+            return;
+        }
+
+        if (newThreshold < 0) {
+            inventoryStatusLabel.setText("Error: Threshold cannot be negative.");
+            return;
+        }
+
+        inventoryService.setLowStockThreshold(newThreshold);
+
+        updateLowStockList();
+        inventoryStatusLabel.setText("Low-stock threshold set to " + newThreshold + ".");
+    }
 }

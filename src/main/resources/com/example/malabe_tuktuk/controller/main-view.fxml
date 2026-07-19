@@ -45,7 +45,7 @@
                      <children>
                         <Label text="Low-stock threshold:" />
                         <TextField fx:id="thresholdField" prefWidth="60.0" text="10" />
-                        <Button fx:id="setThresholdButton" mnemonicParsing="false" text="Set Threshold" />
+                        <Button fx:id="setThresholdButton" mnemonicParsing="false" onAction="#handleSetThreshold" text="Set Threshold" />
                      </children>
                   </HBox>
                   <Label text="Low-stock warning (updates automatically): " />
