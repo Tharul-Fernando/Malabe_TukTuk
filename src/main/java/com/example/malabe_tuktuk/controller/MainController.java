@@ -1,5 +1,6 @@
 package com.example.malabe_tuktuk.controller;
 
+import com.example.malabe_tuktuk.model.Cart;
 import com.example.malabe_tuktuk.model.Part;
 import com.example.malabe_tuktuk.model.Dealer;
 import com.example.malabe_tuktuk.parser.DataParser;
@@ -25,6 +26,69 @@ public class MainController {
     private static final String Legacy_Parts = "data/inventory_legacy.txt";
 
     private static final String Legacy_dealers = "data/dealers_legacy.txt";
+
+    @FXML
+    private TableView<Part> posTable;
+    @FXML
+    private TableColumn<Part, String> posCode;
+    @FXML
+    private TableColumn<Part, String> posDescription;
+    @FXML
+    private TableColumn<Part, String> posBrand;
+    @FXML
+    private TableColumn<Part, String> posPrice;
+    @FXML
+    private TableColumn<Part, String> posStock;
+    @FXML
+    private TableColumn<Part, String> posCategory;
+
+
+
+    @FXML
+    private Label selectAnItemLabel;
+    @FXML
+    private TextField cartQuantityField;
+    @FXML
+    private Button addToCartButton;
+
+    @FXML
+    private Label cartLabel;
+    @FXML
+    private TableView<Cart> cartTable;
+    @FXML
+    private TableColumn<Cart, String> colCartId;
+    @FXML
+    private TableColumn<Cart, String> colCartProduct;
+    @FXML
+    private TableColumn<Cart, String> colCartQty;
+    @FXML
+    private TableColumn<Cart, String> colCartUnitPrice;
+    @FXML
+    private TableColumn<Cart, String> colCartDisc;
+    @FXML
+    private TableColumn<Cart, String> colCartTotal;
+
+
+
+    @FXML
+    private Label cartSubtotalLabel;
+    @FXML
+    private Label cartBulkDiscount;
+    @FXML
+    private Label cartSynergyDiscount;
+    @FXML
+    private Label cartFinalTotal;
+
+
+
+    @FXML
+    private Button removeSelectedButton;
+    @FXML
+    private Button clearCartButton;
+    @FXML
+    private Button checkoutButton;
+    @FXML
+    private Label cartStatusLabel;
 
     private InventoryService inventoryService;
     private DealerService dealerService;

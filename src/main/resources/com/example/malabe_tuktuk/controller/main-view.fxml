@@ -103,7 +103,8 @@
                     </padding>
                <children>
                   <Label fx:id="dealerStatusLabel" text="Ready" />
-                  <TableView fx:id="dealerTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="449.0">
+                  <Button fx:id="pickDealersButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handlePickDealers" prefHeight="20.0" prefWidth="108.0" text="Pick 4 Dealers" />
+                  <TableView fx:id="dealerTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="880.0">
                     <columns>
                       <TableColumn fx:id="colDealerCode" prefWidth="116.6666898727417" text="Dealer Code" />
                       <TableColumn fx:id="colDealerName" prefWidth="142.6666717529297" text="Dealer Name" />
@@ -111,7 +112,6 @@
                         <TableColumn fx:id="colDealerPhone" minWidth="9.33331298828125" prefWidth="127.33331298828125" text="Phone" />
                     </columns>
                   </TableView>
-                  <Button fx:id="pickDealersButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handlePickDealers" prefHeight="20.0" prefWidth="108.0" text="Pick 4 Dealers" />
                </children>
                 </VBox>
             </Tab>
@@ -121,6 +121,68 @@
                     <padding>
                         <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
+               <children>
+                  <TableView fx:id="posTable" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="posCode" prefWidth="75.0" text="Code" />
+                      <TableColumn fx:id="posDescription" prefWidth="128.00003051757812" text="Description" />
+                        <TableColumn fx:id="posBrand" prefWidth="109.33331298828125" text="Brand" />
+                        <TableColumn fx:id="posPrice" prefWidth="103.99996948242188" text="Price" />
+                        <TableColumn fx:id="posStock" prefWidth="86.6666259765625" text="Stock" />
+                        <TableColumn fx:id="posCategory" prefWidth="148.0" text="Category" />
+                    </columns>
+                  </TableView>
+                  <Label fx:id="selectAnItemLabel" text="Select an item to add to the cart." />
+                  <HBox fillHeight="false" maxHeight="-Infinity" prefHeight="35.0" prefWidth="880.0">
+                     <children>
+                        <Label text="Quantity:">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="cartQuantityField" maxWidth="-Infinity" prefHeight="15.0" prefWidth="60.0" />
+                        <Button fx:id="addToCartButton" mnemonicParsing="false" text="Add to cart">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="-2.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label fx:id="cartLabel" text="Cart" />
+                  <TableView fx:id="cartTable" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="colCartId" prefWidth="102.6666898727417" text="Code" />
+                      <TableColumn fx:id="colCartProduct" minWidth="4.0" prefWidth="147.33329010009766" text="Description" />
+                        <TableColumn fx:id="colCartQty" prefWidth="78.0" text="Qty" />
+                        <TableColumn fx:id="colCartUnitPrice" prefWidth="91.99996948242188" text="Unit Price" />
+                        <TableColumn fx:id="colCartDisc" prefWidth="104.00003051757812" text="Discount" />
+                        <TableColumn fx:id="colCartTotal" prefWidth="131.33331298828125" text="Total" />
+                    </columns>
+                  </TableView>
+                  <Label fx:id="cartSubtotalLabel" text="Subtotal: Rs. " />
+                  <Label fx:id="cartBulkDiscount" layoutX="20.0" layoutY="538.0" text="Bulk Discount: Rs. " />
+                  <Label fx:id="cartSynergyDiscount" layoutX="20.0" layoutY="553.0" text="Synergy Discount: Rs. " />
+                  <Label fx:id="cartFinalTotal" layoutX="20.0" layoutY="553.0" text="Final Total: Rs. " />
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="300.0">
+                     <children>
+                        <Button fx:id="removeSelectedButton" mnemonicParsing="false" text="Remove Select">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="clearCartButton" mnemonicParsing="false" text="Clear">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="checkoutButton" mnemonicParsing="false" text="Checkout" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="cartStatusLabel" text="Ready" />
+               </children>
                 </VBox>
             </Tab>
 
