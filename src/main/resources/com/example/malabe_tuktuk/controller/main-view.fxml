@@ -32,8 +32,8 @@
                   <TableView fx:id="inventoryTable" prefHeight="260.0" prefWidth="200.0">
                     <columns>
                       <TableColumn fx:id="colCode" prefWidth="75.0" text="Code" />
-                      <TableColumn fx:id="colDescription" prefWidth="192.6666488647461" text="Description" />
-                        <TableColumn fx:id="colBrand" minWidth="0.0" prefWidth="96.66665649414062" text="Brand" />
+                      <TableColumn fx:id="colDescription" prefWidth="161.33332061767578" text="Description" />
+                        <TableColumn fx:id="colBrand" minWidth="0.0" prefWidth="128.66665649414062" text="Brand" />
                         <TableColumn fx:id="colPrice" prefWidth="95.33328247070312" text="Price" />
                         <TableColumn fx:id="colQuantity" prefWidth="63.999969482421875" text="Stock" />
                         <TableColumn fx:id="colCategory" prefWidth="95.99993896484375" text="Category" />

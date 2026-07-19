@@ -63,23 +63,52 @@ public class CartService {
         return "Error: " + partCode + " does not exist in the cart.";
     }
 
-    public double calculateTotal(){
 
-        double total = 0;
+    public double getSubtotalForItem(Cart item){
+        return item.getPart().getPrice() * item.getQuantity();
+    }
+
+    public double getBulkDiscountForItem(Cart item){
+
+        double subtotal = getSubtotalForItem(item);
+
+        if (item.getQuantity() >= 3){
+            return subtotal * 0.05;
+        }
+        return 0;
+    }
+
+    public double getLineTotalForItem(Cart item){
+        return getSubtotalForItem(item) - getBulkDiscountForItem(item);
+    }
+
+
+    public double getCartSubtotal(){
+
+        double subtotal = 0;
+        for (int i = 0; i < cartItems.size(); i++){
+            subtotal += getSubtotalForItem(cartItems.get(i));
+        }
+        return subtotal;
+    }
+
+    public double getCartBulkDiscountTotal(){
+
+        double bulkDiscountTotal = 0;
+        for (int i = 0; i < cartItems.size(); i++){
+            bulkDiscountTotal += getBulkDiscountForItem(cartItems.get(i));
+        }
+        return bulkDiscountTotal;
+    }
+
+    private boolean hasEngineAndElectrical(){
+
         boolean hasEngine = false;
         boolean hasElectrical = false;
 
         for (int i = 0; i < cartItems.size(); i++){
-            Cart item = cartItems.get(i);
-            double subtotal = item.getSubtotal();
+            String category = cartItems.get(i).getPart().getCategory();
 
-            if (item.getQuantity() >= 3){
-                subtotal = subtotal * 0.95;
-            }
-
-            total += subtotal;
-
-            String category = item.getPart().getCategory();
             if (category.equalsIgnoreCase("Engine")){
                 hasEngine = true;
             }
@@ -89,11 +118,20 @@ public class CartService {
             }
         }
 
-        if (hasElectrical &&  hasEngine){
-            total = total * 0.90;
-        }
+        return hasEngine && hasElectrical;
+    }
 
-        return total;
+    public double getSynergyDiscountAmount(){
+
+        if (hasEngineAndElectrical()){
+            double afterBulkDiscount = getCartSubtotal() - getCartBulkDiscountTotal();
+            return afterBulkDiscount * 0.10;
+        }
+        return 0;
+    }
+
+    public double calculateTotal(){
+        return getCartSubtotal() - getCartBulkDiscountTotal() - getSynergyDiscountAmount();
     }
 
     public String checkout(){
