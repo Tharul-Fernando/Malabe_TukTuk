@@ -149,6 +149,7 @@ public class MainController {
 
         List<Dealer> loadedDealers = DealerParser.loadDealerInventory(Clean_dealers, Legacy_dealers);
         dealerService = new DealerService(loadedDealers);
+        setupDealerColumns();
 
         inventoryService.sortByCate_Code();
         displayInventoryTable();
@@ -190,6 +191,15 @@ public class MainController {
                 return new SimpleStringProperty(formatted);
             }
         });
+    }
+
+    private void setupDealerColumns() {
+
+        colDealerCode.setCellValueFactory(new PropertyValueFactory<>("dealerCode"));
+        colDealerName.setCellValueFactory(new PropertyValueFactory<>("dealerName"));
+        colDealerPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        colDealerCity.setCellValueFactory(new PropertyValueFactory<>("city"));
+
     }
 
     private void displayInventoryTable(){
@@ -396,5 +406,20 @@ public class MainController {
 
         updateLowStockList();
         inventoryStatusLabel.setText("Low-stock threshold set to " + newThreshold + ".");
+    }
+
+    @FXML
+    private void handlePickDealers() {
+
+        List<Dealer> selectedDealers = dealerService.getRandomDealers();
+
+        if (selectedDealers.isEmpty()) {
+            dealerStatusLabel.setText("Error: Not enough dealers to select four.");
+            return;
+        }
+
+        ObservableList<Dealer> tableData = FXCollections.observableArrayList(selectedDealers);
+        dealerTable.setItems(tableData);
+        dealerStatusLabel.setText("4 dealers are randomly sorted.");
     }
 }

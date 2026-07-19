@@ -107,11 +107,11 @@
                     <columns>
                       <TableColumn fx:id="colDealerCode" prefWidth="116.6666898727417" text="Dealer Code" />
                       <TableColumn fx:id="colDealerName" prefWidth="142.6666717529297" text="Dealer Name" />
-                        <TableColumn fx:id="colDealerPhone" minWidth="9.33331298828125" prefWidth="127.33331298828125" text="Phone" />
                         <TableColumn fx:id="colDealerCity" minWidth="0.0" prefWidth="123.99996948242188" text="City" />
+                        <TableColumn fx:id="colDealerPhone" minWidth="9.33331298828125" prefWidth="127.33331298828125" text="Phone" />
                     </columns>
                   </TableView>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="108.0" text="Pick 4 Dealers" />
+                  <Button fx:id="pickDealersButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handlePickDealers" prefHeight="20.0" prefWidth="108.0" text="Pick 4 Dealers" />
                </children>
                 </VBox>
             </Tab>
