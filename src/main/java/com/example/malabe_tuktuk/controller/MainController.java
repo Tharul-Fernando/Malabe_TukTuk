@@ -1,9 +1,11 @@
 package com.example.malabe_tuktuk.controller;
 
 import com.example.malabe_tuktuk.model.Part;
-
+import com.example.malabe_tuktuk.model.Dealer;
 import com.example.malabe_tuktuk.parser.DataParser;
+import com.example.malabe_tuktuk.parser.DealerParser;
 import com.example.malabe_tuktuk.service.InventoryService;
+import com.example.malabe_tuktuk.service.DealerService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,7 +24,11 @@ public class MainController {
     private static final String Clean_Parts = "data/inventory_clean.txt";
     private static final String Legacy_Parts = "data/inventory_legacy.txt";
 
+    private static final String Clean_dealers = "data/dealers_clean.txt";
+    private static final String Legacy_dealers = "data/dealers_legacy.txt";
+
     private InventoryService inventoryService;
+    private DealerService dealerService;
 
     @FXML
     private Label inventoryTotalsLabel;
@@ -107,7 +113,30 @@ public class MainController {
 
 
 
-    @FXML private Label inventoryStatusLabel;
+    @FXML
+    private TableView<Dealer> dealerTable;
+
+    @FXML
+    private TableColumn<Dealer, String> colDealerCode;
+
+    @FXML
+    private TableColumn<Dealer, String> colDealerName;
+
+    @FXML
+    private TableColumn<Dealer, String> colDealerPhone;
+
+    @FXML
+    private TableColumn<Dealer, String> colDealerCity;
+
+    @FXML
+    private Button pickDealersButton;
+
+    @FXML
+    private Label dealerStatusLabel;
+
+
+    @FXML
+    private Label inventoryStatusLabel;
 
 
     @FXML
@@ -116,8 +145,11 @@ public class MainController {
 
         List<Part> loadedParts = DataParser.loadInventory(Clean_Parts, Legacy_Parts);
         inventoryService = new InventoryService(loadedParts);
-
         setupInventoryColumns();
+
+        List<Dealer> loadedDealers = DealerParser.loadDealerInventory(Clean_dealers, Legacy_dealers);
+        dealerService = new DealerService(loadedDealers);
+
         inventoryService.sortByCate_Code();
         displayInventoryTable();
 
