@@ -61,12 +61,12 @@ public class DealerService {
 
             for (int j = 0; j < size - 1 - i; j++){
 
-                Dealer current = dealerList.get(i);
-                Dealer next = dealerList.get(i + 1);
+                Dealer current = dealerList.get(j);
+                Dealer next = dealerList.get(j + 1);
 
                 if (current.getCity().compareTo(next.getCity()) > 0){
-                    dealerList.set(i, next);
-                    dealerList.set(i+1, current);
+                    dealerList.set(j, next);
+                    dealerList.set(j+1, current);
                     swapped = true;
                 }
             }
