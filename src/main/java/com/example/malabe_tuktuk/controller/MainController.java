@@ -216,6 +216,11 @@ public class MainController {
         dealerService = new DealerService(loadedDealers);
         setupDealerColumns();
 
+        cartService = new CartService();
+        setupPosColumns();
+        setupCartColumns();
+        displayPosTable();
+
         inventoryService.sortByCate_Code();
         displayInventoryTable();
 
@@ -362,6 +367,12 @@ public class MainController {
         }
 
         lowStockListView.setItems(displayLines);
+    }
+
+    private void displayPosTable() {
+        ObservableList<Part> posData = FXCollections.observableArrayList(inventoryService.getInventory());
+        posTable.setItems(posData);
+        posTable.refresh();
     }
 
     @FXML
