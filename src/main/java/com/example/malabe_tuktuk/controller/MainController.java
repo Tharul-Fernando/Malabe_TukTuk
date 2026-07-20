@@ -5,6 +5,7 @@ import com.example.malabe_tuktuk.model.Part;
 import com.example.malabe_tuktuk.model.Dealer;
 import com.example.malabe_tuktuk.parser.DataParser;
 import com.example.malabe_tuktuk.parser.DealerParser;
+import com.example.malabe_tuktuk.service.CartService;
 import com.example.malabe_tuktuk.service.InventoryService;
 import com.example.malabe_tuktuk.service.DealerService;
 import javafx.beans.property.SimpleStringProperty;
@@ -92,6 +93,7 @@ public class MainController {
 
     private InventoryService inventoryService;
     private DealerService dealerService;
+    private CartService cartService;
 
     @FXML
     private Label inventoryTotalsLabel;
@@ -265,6 +267,23 @@ public class MainController {
 
     }
 
+    private void setupPosColumns() {
+        posCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        posDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        posBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        posStock.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        posCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        posPrice.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Part, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Part, String> data) {
+                double price = data.getValue().getPrice();
+                String formatted = "Rs. " + price;
+                return new SimpleStringProperty(formatted);
+            }
+        });
+    }
+
     private void displayInventoryTable(){
         ObservableList<Part> tableData = FXCollections.observableArrayList(inventoryService.getInventory());
         inventoryTable.setItems(tableData);
@@ -325,7 +344,7 @@ public class MainController {
 
         if (priceText.isEmpty() || quantityText.isEmpty()) {
 
-            inventoryTotalsLabel.setText("Error: Price and Quantity are required");
+            inventoryStatusLabel.setText("Error: Price and Quantity are required");
             return;
         }
 
@@ -337,13 +356,13 @@ public class MainController {
             quantity = Integer.parseInt(quantityText);
         }
         catch (NumberFormatException e) {
-            inventoryTotalsLabel.setText("Error: Price must be a number and quantity must be a whole number.");
+            inventoryStatusLabel.setText("Error: Price must be a number and quantity must be a whole number.");
             return;
         }
 
         Part newPart = new Part(code, description, brand, price, quantity, category, dateAdded, photoFileName);
         String result =  inventoryService.addPart(newPart);
-        inventoryTotalsLabel.setText(result);
+        inventoryStatusLabel.setText(result);
 
         refreshTableView();
     }
@@ -485,4 +504,6 @@ public class MainController {
         dealerTable.setItems(tableData);
         dealerStatusLabel.setText("4 dealers are randomly sorted.");
     }
+
+
 }
