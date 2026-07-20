@@ -284,6 +284,53 @@ public class MainController {
         });
     }
 
+    private void setupCartColumns() {
+        colCartId.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Cart, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
+                return new SimpleStringProperty(data.getValue().getPart().getCode());
+            }
+        });
+
+        colCartProduct.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Cart, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
+                return new SimpleStringProperty(data.getValue().getPart().getDescription());
+            }
+        });
+
+        colCartQty.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Cart, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
+                return new SimpleStringProperty(String.valueOf(data.getValue().getQuantity()));
+            }
+        });
+
+        colCartUnitPrice.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Cart, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
+                double price = data.getValue().getPart().getPrice();
+                return new SimpleStringProperty("Rs. " + price);
+            }
+        });
+
+        colCartDisc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Cart, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
+                double discount = cartService.getBulkDiscountForItem(data.getValue());
+                return new SimpleStringProperty("Rs. " + discount);
+            }
+        });
+
+        colCartTotal.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Cart, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
+                double lineTotal = cartService.getLineTotalForItem(data.getValue());
+                return new SimpleStringProperty("Rs. " + lineTotal);
+            }
+        });
+    }
+
     private void displayInventoryTable(){
         ObservableList<Part> tableData = FXCollections.observableArrayList(inventoryService.getInventory());
         inventoryTable.setItems(tableData);
