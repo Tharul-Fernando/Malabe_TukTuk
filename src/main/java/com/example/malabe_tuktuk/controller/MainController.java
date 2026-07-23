@@ -243,6 +243,10 @@ public class MainController {
         );
     }
 
+    private String formatCurrency(double value) {
+        return "Rs. " + String.format("%,.2f", value);
+    }
+
     private void setupInventoryColumns() {
 
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -257,7 +261,7 @@ public class MainController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Part, String> data) {
                 double price = data.getValue().getPrice();
-                String formatted = "Rs. " + price;
+                String formatted = formatCurrency(price);
                 return new SimpleStringProperty(formatted);
             }
         });
@@ -283,7 +287,7 @@ public class MainController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Part, String> data) {
                 double price = data.getValue().getPrice();
-                String formatted = "Rs. " + price;
+                String formatted = formatCurrency(price);
                 return new SimpleStringProperty(formatted);
             }
         });
@@ -315,7 +319,7 @@ public class MainController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
                 double price = data.getValue().getPart().getPrice();
-                return new SimpleStringProperty("Rs. " + price);
+                return new SimpleStringProperty(formatCurrency(price));
             }
         });
 
@@ -323,7 +327,7 @@ public class MainController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
                 double discount = cartService.getBulkDiscountForItem(data.getValue());
-                return new SimpleStringProperty("Rs. " + discount);
+                return new SimpleStringProperty(formatCurrency(discount));
             }
         });
 
@@ -331,7 +335,7 @@ public class MainController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Cart, String> data) {
                 double lineTotal = cartService.getLineTotalForItem(data.getValue());
-                return new SimpleStringProperty("Rs. " + lineTotal);
+                return new SimpleStringProperty(formatCurrency(lineTotal));
             }
         });
     }
@@ -350,7 +354,7 @@ public class MainController {
         int totalParts = inventoryService.getTotalPart();
         double totalValue = inventoryService.getTotalPrice();
 
-        inventoryTotalsLabel.setText("No. of item types: "+ totalParts + "  |  Total value: Rs. " + totalValue);
+        inventoryTotalsLabel.setText("No. of item types: "+ totalParts + "  |  Total value: " + formatCurrency(totalValue));
     }
 
     private void updateLowStockList(){
@@ -608,10 +612,10 @@ public class MainController {
     }
 
     private void updateCartTotals() {
-        cartSubtotalLabel.setText("Subtotal: Rs. " + cartService.getCartSubtotal());
-        cartBulkDiscount.setText("Bulk Discount: Rs. " + cartService.getCartBulkDiscountTotal());
-        cartSynergyDiscount.setText("Synergy Discount: Rs. " + cartService.getSynergyDiscountAmount());
-        cartFinalTotal.setText("Final Total: Rs. " + cartService.calculateTotal());
+        cartSubtotalLabel.setText("Subtotal: " + formatCurrency(cartService.getCartSubtotal()));
+        cartBulkDiscount.setText("Bulk Discount: " + formatCurrency(cartService.getCartBulkDiscountTotal()));
+        cartSynergyDiscount.setText("Synergy Discount: " + formatCurrency(cartService.getSynergyDiscountAmount()));
+        cartFinalTotal.setText("Final Total: " + formatCurrency(cartService.calculateTotal()));
     }
 
 }
