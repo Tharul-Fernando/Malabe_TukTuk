@@ -563,5 +563,55 @@ public class MainController {
         dealerStatusLabel.setText("4 dealers are randomly sorted.");
     }
 
+    @FXML
+    private void handleAddToCart(){
+
+        Part selectedPart = posTable.getSelectionModel().getSelectedItem();
+
+        if (selectedPart == null) {
+            cartStatusLabel.setText("Error: Please select a part to add to cart");
+            return;
+        }
+
+        String quantityText = cartQuantityField.getText().trim();
+
+        if (quantityText.isEmpty()) {
+            cartStatusLabel.setText("Error: Enter a quantity to add to cart.");
+            return;
+        }
+
+        int quantity;
+
+        try{
+            quantity = Integer.parseInt(quantityText);
+        }
+        catch (NumberFormatException e) {
+            cartStatusLabel.setText("Error: Quantity must be a whole number.");
+            return;
+        }
+
+        String result = cartService.addToCart(selectedPart, quantity);
+        cartStatusLabel.setText(result);
+
+        if (!result.startsWith("Error")) {
+            cartQuantityField.clear();
+            displayCartTable();
+        }
+    }
+
+    private void displayCartTable() {
+        ObservableList<Cart> cartData = FXCollections.observableArrayList(cartService.getCartItems());
+        cartTable.setItems(cartData);
+        cartTable.refresh();
+
+        updateCartTotals();
+    }
+
+    private void updateCartTotals() {
+        cartSubtotalLabel.setText("Subtotal: Rs. " + cartService.getCartSubtotal());
+        cartBulkDiscount.setText("Bulk Discount: Rs. " + cartService.getCartBulkDiscountTotal());
+        cartSynergyDiscount.setText("Synergy Discount: Rs. " + cartService.getSynergyDiscountAmount());
+        cartFinalTotal.setText("Final Total: Rs. " + cartService.calculateTotal());
+    }
 
 }
