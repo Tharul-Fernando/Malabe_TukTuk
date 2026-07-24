@@ -626,4 +626,18 @@ public class MainController {
         cartFinalTotal.setText("Final Total: " + formatCurrency(cartService.calculateTotal()));
     }
 
+    @FXML
+    private void handleRemoveSelected(){
+
+        Cart selectedCartItem = cartTable.getSelectionModel().getSelectedItem();
+
+        if (selectedCartItem == null) {
+            cartStatusLabel.setText("Error: Please select a part to remove");
+            return;
+        }
+
+        String result = cartService.removeFromCart(selectedCartItem.getPart().getCode());
+        cartStatusLabel.setText(result);
+        displayCartTable();
+    }
 }

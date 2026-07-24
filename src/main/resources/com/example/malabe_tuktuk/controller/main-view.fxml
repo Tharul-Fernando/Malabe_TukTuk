@@ -165,7 +165,7 @@
                   <Label fx:id="cartFinalTotal" layoutX="20.0" layoutY="553.0" text="Final Total: Rs. " />
                   <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="300.0">
                      <children>
-                        <Button fx:id="removeSelectedButton" mnemonicParsing="false" text="Remove Select">
+                        <Button fx:id="removeSelectedButton" mnemonicParsing="false" onAction="#handleRemoveSelected" text="Remove Select">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
