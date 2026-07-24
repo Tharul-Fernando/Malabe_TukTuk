@@ -275,6 +275,7 @@ public class MainController {
         setupPosColumns();
         setupCartColumns();
         displayPosTable();
+        setupSearchColumns();
 
         inventoryService.sortByCate_Code();
         displayInventoryTable();
@@ -717,4 +718,20 @@ public class MainController {
             refreshTableView();
         }
     }
+
+    private void setupSearchColumns() {
+        searchColCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        searchColDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        searchColBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        searchColStock.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        searchColCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        searchColPrice.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Part, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Part, String> data) {
+                return new SimpleStringProperty(formatCurrency(data.getValue().getPrice()));
+            }
+        });
+    }
+
 }
