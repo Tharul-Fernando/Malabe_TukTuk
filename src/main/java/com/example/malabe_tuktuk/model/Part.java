@@ -7,6 +7,7 @@ public class Part {
     private String brand;
     private double price;
     private int quantity;
+    private int lowStockThreshold;
     private String category;
     private String dateAdded;
     private String photoFileName;
@@ -14,7 +15,7 @@ public class Part {
 
     public Part(String code, String description, String brand,
                 double price, int quantity, String category,
-                String dateAdded, String photoFileName) {
+                String dateAdded, String photoFileName, int lowStockThreshold) {
 
         this.setCode(code);
         this.setDescription(description);
@@ -24,6 +25,8 @@ public class Part {
         this.setCategory(category);
         this.setDateAdded(dateAdded);
         this.setPhotoFileName(photoFileName);
+        this.setLowStockThreshold(lowStockThreshold);
+
     }
 
     public String getCode(){
@@ -56,6 +59,10 @@ public class Part {
 
     public String getPhotoFileName(){
         return photoFileName;
+    }
+
+    public int getLowStockThreshold(){
+        return lowStockThreshold;
     }
 
 
@@ -129,6 +136,15 @@ public class Part {
         }
         else{
             this.photoFileName = photoFileName;
+        }
+    }
+
+    public void setLowStockThreshold(int lowStockThreshold) {
+        if (lowStockThreshold >= 0){
+            this.lowStockThreshold = lowStockThreshold;
+        }
+        else {
+            System.out.println("Error: Low Stock Threshold cannot be negative.");
         }
     }
 

@@ -6,13 +6,14 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 
 public class DataParser {
 
-    public static List<Part> readPartsFile(String filePath){
+    public static List<Part> readPartsFile(String filePath, boolean hasThreshold){
 
         StringBuilder fileContent = new StringBuilder();
 
@@ -27,10 +28,10 @@ public class DataParser {
             System.out.println("Error: Could not read file " + filePath + " - " + e.getMessage());
             return new ArrayList<>();
         }
-        return  loadParts(fileContent.toString());
+        return  loadParts(fileContent.toString(), hasThreshold);
     }
 
-    public static List<Part> loadParts(String rawData) {
+    public static List<Part> loadParts(String rawData,  boolean hasThreshold) {
 
 
         String[] lines = rawData.split("\n");
@@ -47,6 +48,21 @@ public class DataParser {
             commaSepLine = commaSepLine.replace(";", ",");
 
             String[] splitColumns = commaSepLine.split("[,]", -1);
+
+            int itemThreshold = 10;
+
+            if (hasThreshold && splitColumns.length > 0) {
+                String lastColumn = splitColumns[splitColumns.length -1].trim();
+                if (!lastColumn.isEmpty()) {
+                    try{
+                        itemThreshold = Integer.parseInt(lastColumn);
+                        splitColumns = Arrays.copyOf(splitColumns, splitColumns.length - 1);
+                    }
+                    catch (NumberFormatException e){
+                        itemThreshold = 10;
+                    }
+                }
+            }
 
             String itemCode = splitColumns[0].trim();
             String itemDescription = splitColumns[1].trim();
@@ -99,7 +115,7 @@ public class DataParser {
 
             Part newPart = new Part(itemCode, itemDescription,
                     itemBrand, itemPrice, itemQty, itemCategory,
-                    itemDate, itemPhoto);
+                    itemDate, itemPhoto,itemThreshold);
 
             inventory_list.add(newPart);
         }
@@ -124,7 +140,8 @@ public class DataParser {
                         part.getQuantity() + ", " +
                         part.getCategory() + ", " +
                         part.getDateAdded() + ", " +
-                        part.getPhotoFileName();
+                        part.getPhotoFileName() +", "+
+                        part.getLowStockThreshold();
 
 
                 writer.write(line);
@@ -142,10 +159,10 @@ public class DataParser {
         File cleanFile = new File(cleanFilePath);
 
         if (cleanFile.exists()) {
-            return readPartsFile(cleanFilePath);
+            return readPartsFile(cleanFilePath,true);
         }
         else{
-            return readPartsFile(legacyFilePath);
+            return readPartsFile(legacyFilePath, false);
         }
     }
 

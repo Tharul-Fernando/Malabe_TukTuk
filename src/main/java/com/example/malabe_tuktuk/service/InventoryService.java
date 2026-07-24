@@ -13,7 +13,6 @@ public class InventoryService {
 
     public InventoryService(List<Part> inventory){
         this.inventory = inventory;
-        this.lowStockThreshold = 10;
         this.auditLogger = new AuditLogger("data/audit_log.txt");
     }
 
@@ -21,15 +20,6 @@ public class InventoryService {
         return inventory;
     }
 
-    public int getLowStockThreshold(){
-        return lowStockThreshold;
-    }
-
-    public void setLowStockThreshold(int lowStockThreshold){
-        if (lowStockThreshold >= 0) {
-            this.lowStockThreshold = lowStockThreshold;
-        }
-    }
 
     public int getTotalPart(){
         return inventory.size();
@@ -56,7 +46,7 @@ public class InventoryService {
         List<Part> lowStockList = new ArrayList<>();
         for (int i = 0; i < inventory.size(); i++){
             Part part = inventory.get(i);
-            if (part.getQuantity() < lowStockThreshold){
+            if (part.getQuantity() < part.getLowStockThreshold()){
                 lowStockList.add(part);
             }
         }
@@ -171,7 +161,7 @@ public class InventoryService {
 
     public String updatePart(String code, String description,
                              String brand, double price, int quantity,
-                             String category, String  dateAdded, String photoFileName){
+                             String category, String  dateAdded, String photoFileName, int lowStockThreshold){
 
         for (int i = 0; i < inventory.size(); i++){
 
@@ -185,6 +175,7 @@ public class InventoryService {
                 part.setCategory(category);
                 part.setDateAdded(dateAdded);
                 part.setPhotoFileName(photoFileName);
+                part.setLowStockThreshold(lowStockThreshold);
                 auditLogger.log("UPDATE_PART", code, quantity);
                 return "part " + code + " updated successfully";
             }

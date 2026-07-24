@@ -28,6 +28,8 @@ public class MainController {
 
     private static final String Legacy_dealers = "data/dealers_legacy.txt";
 
+
+
     @FXML
     private TableView<Part> posTable;
     @FXML
@@ -117,6 +119,9 @@ public class MainController {
     public TableColumn<Part, String> colQuantity;
 
     @FXML
+    public TableColumn<Part, String> colThreshold;
+
+    @FXML
     public TableColumn<Part, String> colCategory;
 
     @FXML
@@ -127,11 +132,9 @@ public class MainController {
 
 
 
-    @FXML
-    private TextField thresholdField;
 
     @FXML
-    private Button setThresholdButton;
+    public TextField lowStockThresholdField;
 
     @FXML
     private ListView <String> lowStockListView;
@@ -237,6 +240,7 @@ public class MainController {
                             categoryField.setText(newValue.getCategory());
                             dateField.setValue(LocalDate.parse(newValue.getDateAdded()));
                             photoField.setText(newValue.getPhotoFileName());
+                            lowStockThresholdField.setText(String.valueOf(newValue.getLowStockThreshold()));
                         }
                     }
                 }
@@ -253,6 +257,7 @@ public class MainController {
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colThreshold.setCellValueFactory(new PropertyValueFactory<>("lowStockThreshold"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
         colPhoto.setCellValueFactory(new PropertyValueFactory<>("photoFileName"));
@@ -389,6 +394,23 @@ public class MainController {
         String quantityText = quantityField.getText().trim();
         String category = categoryField.getText().trim().toUpperCase();
         String photoFileName = photoField.getText().trim();
+        String thresholdText = lowStockThresholdField.getText().trim();
+
+        int lowStockThreshold;
+
+        if (thresholdText.isEmpty()){
+            lowStockThreshold = 10;
+        }
+        else {
+            try{
+                lowStockThreshold = Integer.parseInt(thresholdText);
+            }
+            catch (NumberFormatException e){
+                inventoryStatusLabel.setText("Error: Low Stock Threshold has to be a whole number.");
+                return;
+            }
+        }
+
 
         LocalDate selectedDate = dateField.getValue();
         String dateAdded;
@@ -422,7 +444,7 @@ public class MainController {
             return;
         }
 
-        Part newPart = new Part(code, description, brand, price, quantity, category, dateAdded, photoFileName);
+        Part newPart = new Part(code, description, brand, price, quantity, category, dateAdded, photoFileName,lowStockThreshold);
         String result =  inventoryService.addPart(newPart);
         inventoryStatusLabel.setText(result);
 
@@ -456,6 +478,7 @@ public class MainController {
         categoryField.clear();
         dateField.setValue(null);
         photoField.clear();
+        lowStockThresholdField.clear();
 
         inventoryTable.getSelectionModel().clearSelection();
     }
@@ -470,7 +493,22 @@ public class MainController {
         String quantityText = quantityField.getText().trim();
         String category = categoryField.getText().trim().toUpperCase();
         String photoFileName = photoField.getText().trim();
+        String thresholdText = lowStockThresholdField.getText().trim();
 
+        int lowStockThreshold;
+
+        if (thresholdText.isEmpty()){
+            lowStockThreshold = 10;
+        }
+        else {
+            try{
+                lowStockThreshold = Integer.parseInt(thresholdText);
+            }
+            catch (NumberFormatException e){
+                inventoryStatusLabel.setText("Error: Low Stock Threshold has to be a whole number.");
+                return;
+            }
+        }
 
         if (code.isEmpty()) {
             inventoryStatusLabel.setText("Error: Select a part to update");
@@ -507,7 +545,7 @@ public class MainController {
             return;
         }
 
-        String result = inventoryService.updatePart(code, description, brand, price, quantity, category, dateAdded, photoFileName);
+        String result = inventoryService.updatePart(code, description, brand, price, quantity, category, dateAdded, photoFileName,lowStockThreshold);
         inventoryStatusLabel.setText(result);
 
         refreshTableView();
@@ -521,36 +559,6 @@ public class MainController {
 
     }
 
-    @FXML
-    private void handleSetThreshold(){
-
-        String thresholdText = thresholdField.getText().trim();
-
-        if (thresholdText.isEmpty()) {
-            inventoryStatusLabel.setText("Error: Threshold must be a whole number.");
-            return;
-        }
-
-        int newThreshold;
-
-        try {
-            newThreshold = Integer.parseInt(thresholdText);
-        }
-        catch (NumberFormatException e) {
-            inventoryStatusLabel.setText("Error: Threshold must be a whole number.");
-            return;
-        }
-
-        if (newThreshold < 0) {
-            inventoryStatusLabel.setText("Error: Threshold cannot be negative.");
-            return;
-        }
-
-        inventoryService.setLowStockThreshold(newThreshold);
-
-        updateLowStockList();
-        inventoryStatusLabel.setText("Low-stock threshold set to " + newThreshold + ".");
-    }
 
     @FXML
     private void handlePickDealers() {
