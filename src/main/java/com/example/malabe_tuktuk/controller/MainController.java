@@ -777,4 +777,14 @@ public class MainController {
         }
     }
 
+    @FXML
+    private void handleClearSearch() {
+        keywordField.clear();
+        categField.clear();
+        minPriceField.clear();
+        maxPriceField.clear();
+        searchResultTable.getItems().clear();
+        searchStatusLabel.setText("Ready");
+    }
+
 }

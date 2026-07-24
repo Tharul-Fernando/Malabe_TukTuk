@@ -29,7 +29,7 @@
                     </padding>
                <children>
                   <Label fx:id="inventoryTotalsLabel" text=" Total Parts:  0    Total Value: Rs. 0.00" />
-                  <TableView fx:id="inventoryTable" prefHeight="199.0" prefWidth="901.0">
+                  <TableView fx:id="inventoryTable" prefHeight="286.0" prefWidth="880.0">
                     <columns>
                       <TableColumn fx:id="colCode" prefWidth="75.0" text="Code" />
                       <TableColumn fx:id="colDescription" prefWidth="130.6666488647461" text="Description" />
@@ -43,7 +43,7 @@
                     </columns>
                   </TableView>
                   <Label text="Low-stock warning (updates automatically): " />
-                  <ListView fx:id="lowStockListView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="91.0" prefWidth="400.0" />
+                  <ListView fx:id="lowStockListView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="123.0" prefWidth="400.0" />
                   <Label text="Add / Update / Delete Part" />
                   <GridPane hgap="10.0" vgap="8.0">
                     <columnConstraints>
@@ -249,10 +249,10 @@
                            </Button>
                         </children>
                         <VBox.margin>
-                           <Insets top="30.0" />
+                           <Insets left="405.0" top="30.0" />
                         </VBox.margin>
                      </HBox>
-                     <TableView fx:id="searchResultTable" prefHeight="200.0" prefWidth="200.0">
+                     <TableView fx:id="searchResultTable" prefHeight="277.0" prefWidth="880.0">
                        <columns>
                          <TableColumn fx:id="searchColCode" prefWidth="75.0" text="Code" />
                          <TableColumn fx:id="searchColDescription" prefWidth="141.33333587646484" text="Description" />
