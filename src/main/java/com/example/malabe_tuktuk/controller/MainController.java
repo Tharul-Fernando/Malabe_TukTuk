@@ -211,6 +211,55 @@ public class MainController {
 
 
     @FXML
+    private TextField keywordField;
+
+    @FXML
+    private TextField minPriceField;
+
+    @FXML
+    private TextField categField;
+
+    @FXML
+    private TextField maxPriceField;
+
+
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private Button clearSearchButton;
+
+
+
+    @FXML
+    private TableView<Part> searchResultTable;
+
+    @FXML
+    private TableColumn<Part, String> searchColCode;
+
+    @FXML
+    private TableColumn<Part, String> searchColDescription;
+
+    @FXML
+    private TableColumn<Part, String> searchColBrand;
+
+    @FXML
+    private TableColumn<Part, String> searchColPrice;
+
+    @FXML
+    private TableColumn<Part, String> searchColStock;
+
+    @FXML
+    private TableColumn<Part, String> searchColCategory;
+
+
+
+    @FXML
+    private Label searchStatusLabel;
+
+
+    @FXML
     public void initialize() {
         System.out.println("MainController connected - initialize() was called");
 
