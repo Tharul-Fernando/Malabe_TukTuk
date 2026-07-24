@@ -734,4 +734,47 @@ public class MainController {
         });
     }
 
+    @FXML
+    private void handleSearch() {
+
+        String keyword = keywordField.getText().trim();
+        String category = categoryField.getText().trim();
+        String minPriceText = minPriceField.getText().trim();
+        String maxPriceText = maxPriceField.getText().trim();
+
+        Double minPrice = null;
+        Double maxPrice = null;
+
+        if (!minPriceText.isEmpty()) {
+            try {
+                minPrice = Double.parseDouble(minPriceText);
+            } catch (NumberFormatException e) {
+                searchStatusLabel.setText("Error: Min price must be a number.");
+                return;
+            }
+        }
+
+        if (!maxPriceText.isEmpty()) {
+            try {
+                maxPrice = Double.parseDouble(maxPriceText);
+            } catch (NumberFormatException e) {
+                searchStatusLabel.setText("Error: Max price must be a number.");
+                return;
+            }
+        }
+
+        List<Part> results = inventoryService.searchParts(keyword, category, minPrice, maxPrice);
+
+        ObservableList<Part> resultData = FXCollections.observableArrayList(results);
+        searchResultTable.setItems(resultData);
+        searchResultTable.refresh();
+
+        if (results.isEmpty()) {
+            searchStatusLabel.setText("Error: No parts match your search.");
+        }
+        else {
+            searchStatusLabel.setText(results.size() + " results(s) found.");
+        }
+    }
+
 }
