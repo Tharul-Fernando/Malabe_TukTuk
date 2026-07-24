@@ -640,4 +640,24 @@ public class MainController {
         cartStatusLabel.setText(result);
         displayCartTable();
     }
+
+    @FXML
+    private void handleClearCart() {
+        cartService.clearCart();
+        displayCartTable();
+        cartStatusLabel.setText("Cart cleared.");
+    }
+
+    @FXML
+    private void handleCheckout() {
+
+        String result = cartService.checkout();
+        cartStatusLabel.setText(result);
+
+        if (!result.startsWith("Error")) {
+            displayCartTable();
+            refreshTableView();
+            displayPosTable();
+        }
+    }
 }

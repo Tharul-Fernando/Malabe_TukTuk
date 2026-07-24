@@ -155,8 +155,12 @@ public class CartService {
         }
 
         double finalTotal =  calculateTotal();
-        cartItems.clear();
+        clearCart();
 
         return "Checkout successful. Total charged: Rs. " + String.format("%,.2f",finalTotal);
+    }
+
+    public void clearCart(){
+        cartItems.clear();
     }
 }

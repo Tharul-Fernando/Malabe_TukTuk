@@ -170,12 +170,12 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="clearCartButton" mnemonicParsing="false" text="Clear">
+                        <Button fx:id="clearCartButton" mnemonicParsing="false" onAction="#handleClearCart" text="Clear">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="checkoutButton" mnemonicParsing="false" text="Checkout" />
+                        <Button fx:id="checkoutButton" mnemonicParsing="false" onAction="#handleCheckout" text="Checkout" />
                      </children>
                   </HBox>
                   <Label fx:id="cartStatusLabel" text="Ready" />
