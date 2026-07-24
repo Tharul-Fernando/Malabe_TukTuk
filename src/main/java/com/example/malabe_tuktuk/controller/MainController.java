@@ -351,10 +351,10 @@ public class MainController {
     }
 
     private void updateTotalsLabel(){
-        int totalParts = inventoryService.getTotalPart();
+        int totalStock = inventoryService.getTotalStock();
         double totalValue = inventoryService.getTotalPrice();
 
-        inventoryTotalsLabel.setText("No. of item types: "+ totalParts + "  |  Total value: " + formatCurrency(totalValue));
+        inventoryTotalsLabel.setText("Total Stock: "+ totalStock + "  |  Total value: " + formatCurrency(totalValue));
     }
 
     private void updateLowStockList(){

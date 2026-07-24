@@ -35,6 +35,14 @@ public class InventoryService {
         return inventory.size();
     }
 
+    public int getTotalStock(){
+        int totalStock = 0;
+        for (int i =0; i < inventory.size(); i++){
+            totalStock += inventory.get(i).getQuantity();
+        }
+        return totalStock;
+    }
+
     public double getTotalPrice(){
         double totalPrice = 0;
         for (int i = 0; i < inventory.size(); i++){
