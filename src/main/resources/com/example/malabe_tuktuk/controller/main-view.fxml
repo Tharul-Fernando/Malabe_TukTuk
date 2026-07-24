@@ -100,7 +100,16 @@
                     </padding>
                <children>
                   <Label fx:id="dealerStatusLabel" text="Ready" />
-                  <Button fx:id="pickDealersButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handlePickDealers" prefHeight="20.0" prefWidth="108.0" text="Pick 4 Dealers" />
+                  <HBox prefHeight="0.0" prefWidth="880.0">
+                     <children>
+                        <Button fx:id="pickDealersButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handlePickDealers" prefHeight="20.0" prefWidth="108.0" text="Pick 4 Dealers" />
+                        <Button fx:id="clearDealerButton" mnemonicParsing="false" onAction="#handleClearDealers" text="Clear Dealers">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                   <TableView fx:id="dealerTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="880.0">
                     <columns>
                       <TableColumn fx:id="colDealerCode" prefWidth="116.6666898727417" text="Dealer Code" />

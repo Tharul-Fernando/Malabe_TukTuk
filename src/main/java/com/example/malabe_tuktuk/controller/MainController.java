@@ -200,6 +200,9 @@ public class MainController {
     private Button pickDealersButton;
 
     @FXML
+    public Button clearDealerButton;
+
+    @FXML
     private Label dealerStatusLabel;
 
 
@@ -556,7 +559,7 @@ public class MainController {
         inventoryService.sortByCate_Code();
         DataParser.saveParts(inventoryService.getInventory(), Clean_Parts);
         displayInventoryTable();
-
+        displayPosTable();
     }
 
 
@@ -573,6 +576,12 @@ public class MainController {
         ObservableList<Dealer> tableData = FXCollections.observableArrayList(selectedDealers);
         dealerTable.setItems(tableData);
         dealerStatusLabel.setText("4 dealers are randomly sorted.");
+    }
+
+    @FXML
+    private void handleClearDealers() {
+        dealerTable.getItems().clear();
+        dealerStatusLabel.setText("Dealers have been cleared.");
     }
 
     @FXML
@@ -657,7 +666,6 @@ public class MainController {
         if (!result.startsWith("Error")) {
             displayCartTable();
             refreshTableView();
-            displayPosTable();
         }
     }
 }
