@@ -582,7 +582,7 @@ public class MainController {
         }
 
         if (priceText.isEmpty() ||  quantityText.isEmpty()) {
-            inventoryTotalsLabel.setText("Error: Price and Quantity are required");
+            inventoryStatusLabel.setText("Error: Price and Quantity are required");
             return;
         }
 
@@ -738,7 +738,7 @@ public class MainController {
     private void handleSearch() {
 
         String keyword = keywordField.getText().trim();
-        String category = categoryField.getText().trim();
+        String category = categField.getText().trim();
         String minPriceText = minPriceField.getText().trim();
         String maxPriceText = maxPriceField.getText().trim();
 
